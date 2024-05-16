@@ -12,6 +12,7 @@ namespace MetalCoin.Api.Configuracoes
         {
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<ICuponsRepository, CupomRepository>();
 
             return services;
         }
