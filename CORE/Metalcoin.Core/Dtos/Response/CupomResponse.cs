@@ -10,7 +10,7 @@ namespace Metalcoin.Core.Dtos.Response
     public class CupomResponse
     {
         public Guid Id { get; set; }
-        public Guid CodigoCupom { get; set; }
+        public string CodigoCupom { get; set; }
         public string Descricao { get; set; }
         public decimal ValorDesconto { get; set; }
         public TipoDesconto TipoDescontoCupon { get; set; }

@@ -10,7 +10,7 @@ namespace Metalcoin.Core.Domain
 {
     public class Cupom:Entidade
     {
-        public Guid CodigoCupom { get; set; }
+        public string CodigoCupom { get; set; }
 
         public string Descricao { get; set; }
         public decimal ValorDesconto { get; set; }

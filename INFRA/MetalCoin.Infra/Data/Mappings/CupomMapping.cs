@@ -13,26 +13,28 @@ namespace MetalCoin.Infra.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Cupom> builder)
         {
-            builder.ToTable("Categorias");
+            builder.ToTable("Cupons");
 
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Descricao)
                 .HasColumnType("varchar(100)")
                 .IsRequired();
-
-            builder.Property(p => p.statusCupom)
-                .HasColumnType("bit")
-                .IsRequired();
-
             builder.Property(p => p.DataValidade)
                 .HasColumnType("datetime")
                 .IsRequired();
-
             builder.Property(p => p.TipoDescontoCupon)
-                .HasColumnType("string")
+                .HasColumnType("int")
                 .IsRequired();
-
+            builder.Property(p => p.statusCupom)
+               .HasColumnType("int")
+               .IsRequired();
+            builder.Property(p => p.CodigoCupom)
+              .HasColumnType("string")
+              .IsRequired();
+            builder.Property(p => p.ValorDesconto)
+              .HasColumnType("decimal")
+              .IsRequired();
         }
     }
 }

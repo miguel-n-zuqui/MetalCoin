@@ -19,6 +19,5 @@ namespace Metalcoin.Core.Dtos.Request
         public TipoStatusCupom statusCupom { get; set; }
         public DateTime DataValidade { get; set; }
 
-        public int QuantidadeLiberado { get; set; }
     }
 }

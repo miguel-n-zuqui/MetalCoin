@@ -6,12 +6,13 @@ using Metalcoin.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MetalCoin.Application.Services
 {
-    internal class CupomService : ICuponsServices
+    public class CupomService : ICuponsServices
     {
         private readonly ICuponsRepository _cuponsRepository;
         public CupomService(ICuponsRepository repository)
@@ -22,7 +23,6 @@ namespace MetalCoin.Application.Services
         {
             var cupomDb = await _cuponsRepository.ObterPorId(cupom.Id);
 
-            cupomDb.Id = cupom.Id;
             cupomDb.statusCupom = cupom.statusCupom;
             cupomDb.Descricao = cupom.Descricao.ToUpper();
             cupomDb.ValorDesconto = cupom.ValorDesconto;
@@ -45,12 +45,12 @@ namespace MetalCoin.Application.Services
 
             return response;
         }
-
+       
         public async Task<CupomResponse> CadastrarCupom(CupomCadastrarRequest cupom)
         {
             var cupomEntidade = new Cupom
             {
-                CodigoCupom = Guid.NewGuid(),
+                CodigoCupom = "aleatorio",
                 Descricao = cupom.Descricao.ToUpper(),
                 statusCupom = cupom.statusCupom,
                 ValorDesconto = cupom.ValorDesconto,

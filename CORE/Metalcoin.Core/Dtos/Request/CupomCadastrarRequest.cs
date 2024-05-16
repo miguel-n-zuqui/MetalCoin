@@ -10,6 +10,7 @@ namespace Metalcoin.Core.Dtos.Request
 {
     public class CupomCadastrarRequest
     {
+        [Required(ErrorMessage = "Nome da categoria é obrigátorio")]
         [MaxLength(100, ErrorMessage = "Cupom pode ter no máximo 100 letras")]
         public string Descricao { get; set; }
         public decimal ValorDesconto { get; set; }

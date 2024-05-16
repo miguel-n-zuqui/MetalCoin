@@ -16,14 +16,15 @@ namespace MetalCoin.Api.Controllers
         private readonly ICuponsRepository _cuponsRepository;
         private readonly ICuponsServices _cuponsServices;
 
-        public CuponDescontoController(ICuponsRepository cuponsRepository)
+        public CuponDescontoController(ICuponsRepository cuponsRepository, ICuponsServices cuponsServices)
         {
             _cuponsRepository = cuponsRepository;
+            _cuponsServices = cuponsServices;
         }
 
         [HttpGet]
-        [Route("todos")]
-        public async Task<ActionResult> ObterTodasCategorias()
+        [Route("todos-cupom")]
+        public async Task<ActionResult> ObterTodosCupons()
         {
             var listarCupons = await _cuponsRepository.ObterTodos();
 
@@ -33,8 +34,8 @@ namespace MetalCoin.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:guid}")]
-        public async Task<ActionResult> ObterUmaCategoria(Guid id)
+        [Route("obter/{id:guid}")]
+        public async Task<ActionResult> ObterUmCupom(Guid id)
         {
             var categoria = await _cuponsRepository.ObterPorId(id);
             if (categoria == null) return BadRequest("Cupom não encontrada");
@@ -43,20 +44,22 @@ namespace MetalCoin.Api.Controllers
 
 
         [HttpPost]
-        [Route("cadastrar")]
-        public async Task<ActionResult> CadastrarCategoria([FromBody] CupomCadastrarRequest cupom)
+        [Route("cadastrar-cupom")]
+        public async Task<ActionResult> CadastrarCupom([FromBody] CupomCadastrarRequest cupom)
         {
             if (cupom == null) return BadRequest("Informe o nome da cupom");
 
             var response = await _cuponsServices.CadastrarCupom(cupom);
 
-            if (response == null) return BadRequest("Categoria já existe");
+            if (response == null) return BadRequest("Cupom já existe");
 
             return Created("cadastrar", response);
         }
+
+
         [HttpPut]
-        [Route("atualizar")]
-        public async Task<ActionResult> AtualizarCategoria([FromBody] CupomAtualizarRequest cupom)
+        [Route("atualizar-cupom")]
+        public async Task<ActionResult> AtualizarCupom([FromBody] CupomAtualizarRequest cupom)
         {
             if (cupom == null) return BadRequest("Nenhum valor chegou na API");
 
@@ -67,7 +70,7 @@ namespace MetalCoin.Api.Controllers
 
 
         [HttpDelete]
-        [Route("deletar/{id:guid}")]
+        [Route("deletar/cupom/{id:guid}")]
         public async Task<ActionResult> RemoverCupom(Guid id)
         {
             if (id == Guid.Empty) return BadRequest("Id não informado");
