@@ -1,5 +1,7 @@
 ﻿using Metalcoin.Core.Domain;
+using Metalcoin.Core.Enums;
 using Metalcoin.Core.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +14,13 @@ namespace MetalCoin.Infra.Data.Repositories
     {
         public CupomRepository(AppDbContext appDbContext) : base(appDbContext) { }
 
-        public Task<Cupom> BuscarCupomAtivos(int status)
+        public async Task<Cupom> BuscarCupomAtivos(TipoStatusCupom status)
         {
-            throw new NotImplementedException();
+            var resultado = await DbSet.Where(c => c.statusCupom == status).FirstOrDefaultAsync();
+            return resultado;
         }
 
-        public Task<Cupom> BuscarCupomIndisponiveis(int status)
+        public Task<Cupom> BuscarCupomIndisponiveis(TipoStatusCupom status)
         {
             throw new NotImplementedException();
         }

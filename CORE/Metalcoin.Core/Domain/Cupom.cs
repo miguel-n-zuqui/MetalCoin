@@ -17,8 +17,7 @@ namespace Metalcoin.Core.Domain
         public TipoDesconto TipoDescontoCupon { get; set; }
         public TipoStatusCupom statusCupom { get; set; }
         public DateTime DataValidade { get; set; }
-        //public int QuantidadeDeCupomLiberado { get; set; }
-        //public int QuantidadeDeCupomUsados { get; set; }
+        
 
 
     }

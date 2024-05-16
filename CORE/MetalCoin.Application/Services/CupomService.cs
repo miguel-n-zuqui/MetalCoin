@@ -18,12 +18,35 @@ namespace MetalCoin.Application.Services
         {
             _cuponsRepository = repository;
         }
-        public Task<CupomResponse> AtualizaCupom(CupomCadastrarRequest cupom)
+        public async Task<CupomResponse> AtualizaCupom(CupomAtualizarRequest cupom)
         {
-            throw new NotImplementedException();
+            var cupomDb = await _cuponsRepository.ObterPorId(cupom.Id);
+
+            cupomDb.Id = cupom.Id;
+            cupomDb.statusCupom = cupom.statusCupom;
+            cupomDb.Descricao = cupom.Descricao.ToUpper();
+            cupomDb.ValorDesconto = cupom.ValorDesconto;
+            cupomDb.TipoDescontoCupon = cupom.TipoDescontoCupon;
+
+
+            await _cuponsRepository.Atualizar(cupomDb);
+
+            var response = new CupomResponse
+            {
+                CodigoCupom = cupomDb.CodigoCupom,
+                Descricao = cupomDb.Descricao,
+                statusCupom = cupomDb.statusCupom,
+                TipoDescontoCupon = cupomDb.TipoDescontoCupon,
+                ValorDesconto = cupomDb.ValorDesconto,
+
+
+
+            };
+
+            return response;
         }
 
-        public Task<CupomResponse> CadastrarCupom(CupomCadastrarRequest cupom)
+        public async Task<CupomResponse> CadastrarCupom(CupomCadastrarRequest cupom)
         {
             var cupomEntidade = new Cupom
             {
@@ -37,17 +60,27 @@ namespace MetalCoin.Application.Services
 
             await _cuponsRepository.Adicionar(cupomEntidade);
 
-            var response = new CategoriaResponse
+            var response = new CupomResponse
             {
+                CodigoCupom = cupomEntidade.CodigoCupom,
+                Descricao = cupomEntidade.Descricao,
+                statusCupom = cupomEntidade.statusCupom,
+                TipoDescontoCupon = cupomEntidade.TipoDescontoCupon,
+                ValorDesconto = cupomEntidade.ValorDesconto,
                 
             };
 
             return response;
         }
 
-        public Task<bool> DeletarCupom(Guid id)
+        public async Task<bool> DeletarCupom(Guid id)
         {
-            throw new NotImplementedException();
+            var categoria = await _cuponsRepository.ObterPorId(id);
+            if (categoria == null) return false;
+
+
+            await _cuponsRepository.Remover(id);
+            return true;
         }
     }
 }

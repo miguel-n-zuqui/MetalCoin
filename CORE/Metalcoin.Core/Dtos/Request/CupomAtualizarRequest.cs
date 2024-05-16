@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Metalcoin.Core.Dtos.Request
 {
-    public class CupomCadastrarRequest
+    public class CupomAtualizarRequest
     {
+        [Required]
+        public Guid Id { get; set; }
         [MaxLength(100, ErrorMessage = "Cupom pode ter no máximo 100 letras")]
         public string Descricao { get; set; }
         public decimal ValorDesconto { get; set; }
