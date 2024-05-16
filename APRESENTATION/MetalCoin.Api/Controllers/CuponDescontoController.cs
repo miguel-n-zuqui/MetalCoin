@@ -4,6 +4,7 @@ using Metalcoin.Core.Dtos.Categorias;
 using Metalcoin.Core.Dtos.Request;
 using Metalcoin.Core.Interfaces.Repositories;
 using Metalcoin.Core.Interfaces.Services;
+using MetalCoin.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MetalCoin.Api.Controllers
@@ -12,6 +13,7 @@ namespace MetalCoin.Api.Controllers
     public class CuponDescontoController : ControllerBase
     {
         private readonly ICuponsRepository _cuponsRepository;
+        private readonly ICuponsServices _cuponsServices;
 
         public CuponDescontoController(ICuponsRepository cuponsRepository)
         {
@@ -30,6 +32,18 @@ namespace MetalCoin.Api.Controllers
         }
 
 
+        [HttpPost]
+        [Route("cadastrar")]
+        public async Task<ActionResult> CadastrarCategoria([FromBody] CupomCadastrarRequest cupom)
+        {
+            if (cupom == null) return BadRequest("Informe o nome da categoria");
+
+            var response = await _cuponsServices.CadastrarCupom(cupom);
+
+            if (response == null) return BadRequest("Categoria já existe");
+
+            return Created("cadastrar", response);
+        }
 
 
 
