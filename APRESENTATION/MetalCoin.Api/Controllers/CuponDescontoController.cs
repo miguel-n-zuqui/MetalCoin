@@ -33,6 +33,25 @@ namespace MetalCoin.Api.Controllers
             return Ok(listarCupons);
         }
 
+
+        [HttpGet]
+        [Route("todos-cupom-ativos")]
+        public async Task<ActionResult> ObterTodosCuponsAtivos()
+        {
+            var listarCupons = await _cuponsRepository.BuscarCupomAtivos();
+
+
+            return Ok(listarCupons);
+        }
+        [HttpGet]
+        [Route("todos-cupom-desativados")]
+        public async Task<ActionResult> ObterTodosCuponsDesativados()
+        {
+            var listarCupons = await _cuponsRepository.BuscarCupomIndisponiveis();
+
+
+            return Ok(listarCupons);
+        }
         [HttpGet]
         [Route("obter/{id:guid}")]
         public async Task<ActionResult> ObterUmCupom(Guid id)

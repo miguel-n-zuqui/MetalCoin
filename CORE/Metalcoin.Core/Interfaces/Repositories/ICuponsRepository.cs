@@ -10,7 +10,8 @@ namespace Metalcoin.Core.Interfaces.Repositories
 {
     public interface ICuponsRepository:IRepository<Cupom>
     {
-        Task<Cupom> BuscarCupomAtivos(TipoStatusCupom status);
-        Task<Cupom>BuscarCupomIndisponiveis(TipoStatusCupom status);
+        Task<List<Cupom>> BuscarCupomAtivos();
+        Task<List<Cupom>> BuscarCupomIndisponiveis();
     }
 }
+s

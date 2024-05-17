@@ -13,16 +13,16 @@ namespace MetalCoin.Infra.Data.Repositories
     public class CupomRepository: Repository<Cupom>,ICuponsRepository
     {
         public CupomRepository(AppDbContext appDbContext) : base(appDbContext) { }
-
-        public async Task<Cupom> BuscarCupomAtivos(TipoStatusCupom status)
+        public async Task<List<Cupom>> BuscarCupomAtivos()
         {
-            var resultado = await DbSet.Where(c => c.statusCupom == status).FirstOrDefaultAsync();
+            var resultado = await DbSet.Where(x => x.statusCupom == TipoStatusCupom.Ativo).ToListAsync();
             return resultado;
         }
 
-        public Task<Cupom> BuscarCupomIndisponiveis(TipoStatusCupom status)
+        public async Task<List<Cupom>> BuscarCupomIndisponiveis()
         {
-            throw new NotImplementedException();
+            var resultado = await DbSet.Where(x => x.statusCupom == TipoStatusCupom.Desativado).ToListAsync();
+            return resultado;
         }
     }
 }

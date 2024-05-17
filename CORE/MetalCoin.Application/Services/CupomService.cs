@@ -27,8 +27,7 @@ namespace MetalCoin.Application.Services
             cupomDb.Descricao = cupom.Descricao.ToUpper();
             cupomDb.ValorDesconto = cupom.ValorDesconto;
             cupomDb.TipoDescontoCupon = cupom.TipoDescontoCupon;
-
-
+            cupomDb.DataValidade = DateTime.Now;
             await _cuponsRepository.Atualizar(cupomDb);
 
             var response = new CupomResponse
@@ -48,16 +47,19 @@ namespace MetalCoin.Application.Services
        
         public async Task<CupomResponse> CadastrarCupom(CupomCadastrarRequest cupom)
         {
+            if (cupom.DataValidade < DateTime.Now) return null;
             var cupomEntidade = new Cupom
             {
                 CodigoCupom = "aleatorio",
                 Descricao = cupom.Descricao.ToUpper(),
                 statusCupom = cupom.statusCupom,
                 ValorDesconto = cupom.ValorDesconto,
-                TipoDescontoCupon = cupom.TipoDescontoCupon
+                TipoDescontoCupon = cupom.TipoDescontoCupon,
+                DataValidade = cupom.DataValidade,
+                
                 
             };
-
+            
             await _cuponsRepository.Adicionar(cupomEntidade);
 
             var response = new CupomResponse
@@ -75,8 +77,8 @@ namespace MetalCoin.Application.Services
 
         public async Task<bool> DeletarCupom(Guid id)
         {
-            var categoria = await _cuponsRepository.ObterPorId(id);
-            if (categoria == null) return false;
+            var cupom = await _cuponsRepository.ObterPorId(id);
+            if (cupom == null) return false;
 
 
             await _cuponsRepository.Remover(id);
