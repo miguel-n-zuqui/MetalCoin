@@ -14,4 +14,3 @@ namespace Metalcoin.Core.Interfaces.Repositories
         Task<List<Cupom>> BuscarCupomIndisponiveis();
     }
 }
-s
