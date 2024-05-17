@@ -19,6 +19,19 @@ namespace MetalCoin.Application.Services
         {
             _cuponsRepository = repository;
         }
+
+        public async Task<bool> AtivarCupom(AtivareDesativarCupomRequest cupom)
+        {
+            var cupomDb = await _cuponsRepository.ObterPorId(cupom.Id);
+            if (cupomDb.statusCupom == 0) return false;
+            cupomDb.statusCupom = cupom.StatusCupom;
+
+           await _cuponsRepository.Atualizar(cupomDb);
+           
+            
+            return true;
+        }
+
         public async Task<CupomResponse> AtualizaCupom(CupomAtualizarRequest cupom)
         {
             var cupomDb = await _cuponsRepository.ObterPorId(cupom.Id);
@@ -83,6 +96,23 @@ namespace MetalCoin.Application.Services
 
             await _cuponsRepository.Remover(id);
             return true;
+        }
+
+        public async Task<bool> DesativarCupom(AtivareDesativarCupomRequest cupom)
+        {
+            var cupomDb = await _cuponsRepository.ObterPorId(cupom.Id);
+            if (cupomDb.statusCupom == 0) return false;
+            cupomDb.statusCupom = cupom.StatusCupom;
+
+            await _cuponsRepository.Atualizar(cupomDb);
+
+
+            return true;
+        }
+
+        public Task<CupomResponse> UtilizarCupom(UtilizarCupomRequest cupom)
+        {
+            throw new NotImplementedException();
         }
     }
 }

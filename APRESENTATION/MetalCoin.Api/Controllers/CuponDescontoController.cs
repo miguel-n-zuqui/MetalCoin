@@ -87,6 +87,17 @@ namespace MetalCoin.Api.Controllers
             return Ok(response);
         }
 
+        [HttpPut]
+        [Route("Utilizar-cupom")]
+        public async Task<ActionResult> UtilizarCupom([FromBody] UtilizarCupomRequest cupom)
+        {
+            if (cupom == null) return BadRequest("Nenhum valor chegou na API");
+
+            var response = await _cuponsServices.UtilizarCupom(cupom);
+
+            return Ok(response);
+        }
+
 
         [HttpDelete]
         [Route("deletar/cupom/{id:guid}")]
@@ -101,7 +112,31 @@ namespace MetalCoin.Api.Controllers
             return Ok("Cupom deletada com sucesso");
         }
 
+        [HttpPut]
+        [Route("ativar-cupom")]
+        public async Task<ActionResult> AtivarCupom([FromBody] AtivareDesativarCupomRequest cupom)
+        {
+            if (cupom == null) return BadRequest("Nenhum valor chegou na API");
+            
+            var resultado = await _cuponsServices.AtivarCupom(cupom);
 
+            if (!resultado) return BadRequest("o cupom já está ativado");
+
+            return Ok("Cupom ativado com sucesso");
+        }
+
+        [HttpPut]
+        [Route("ativar-cupom")]
+        public async Task<ActionResult> DesativarCupom([FromBody] AtivareDesativarCupomRequest cupom)
+        {
+            if (cupom == null) return BadRequest("Nenhum valor chegou na API");
+
+            var resultado = await _cuponsServices.DesativarCupom(cupom);
+
+            if (!resultado) return BadRequest("o cupom já está desativado");
+
+            return Ok("Cupom desativado com sucesso");
+        }
 
 
     }
